@@ -1,12 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {Provider} from 'react-redux';
 
 import './reset.css';
 import './index.css';
 
 import Game from './components/game';
 
+import store from './store';
+
+import {addGuess} from './actions';
+
 ReactDOM.render(
-  <Game />,
+  <Provider store={store}>
+    <Game />
+  </Provider>,
   document.getElementById('root')
 );
+//store.dispatch(addGuess(1));
+console.log(store.getState());
