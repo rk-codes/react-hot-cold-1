@@ -8,7 +8,7 @@ const initialState = {
 }
 
 export const gameReducer = (state = initialState, action) => {
-    if(action.type === actions.ADD_GUESS) {
+    if(action.type === actions.MAKE_GUESS) {
         let feedback;
         if (isNaN(action.guess)) {
             feedback = 'Please enter a valid number' ;

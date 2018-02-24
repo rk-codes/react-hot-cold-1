@@ -17,5 +17,5 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 );
-//store.dispatch(addGuess(1));
+
 console.log(store.getState());
