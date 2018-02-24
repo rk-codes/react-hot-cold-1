@@ -5,23 +5,10 @@ import GuessSection from './guess-section';
 import StatusSection from './status-section';
 import InfoSection from './info-section';
 
-import {addGuess, restartGame, generateAuralUpdate} from '../actions';
+import {makeGuess, restartGame, generateAuralUpdate} from '../actions';
 import { connect } from 'react-redux';
 
 export  class Game extends React.Component {
-
-  restartGame() {
-    this.props.dispatch(restartGame());
-  }
-
-  makeGuess(guess) {
-    guess = parseInt(guess, 10);
-    this.props.dispatch(addGuess(guess));
-  }
-
-  generateAuralUpdate() {
-   this.props.dispatch(generateAuralUpdate());
-  }
 
   render() {
     const { feedback, guesses, auralStatus } = this.props;
@@ -30,14 +17,14 @@ export  class Game extends React.Component {
     return (
       <div>
         <Header
-          onRestartGame={() => this.restartGame()}
-          onGenerateAuralUpdate={() => this.generateAuralUpdate()}
+          onRestartGame={() => this.props.restartGame()}
+          onGenerateAuralUpdate={() => this.props.generateAuralUpdate()}
         />
         <main role="main">
           <GuessSection
             feedback={feedback}
             guessCount={guessCount}
-            onMakeGuess={guess => this.makeGuess(guess)}
+            onMakeGuess={guess => this.props.makeGuess(guess)}
           />
           <StatusSection guesses={guesses} 
             auralStatus={auralStatus}
@@ -54,4 +41,11 @@ const mapStateToProps = state => ({
   guesses: state.guesses,
   auralStatus: ''
 });
-export default connect(mapStateToProps)(Game);
+
+const mapDispatchToProps = (dispatch) => ({ 
+    makeGuess: (guess) => dispatch(makeGuess(guess)) ,
+    restartGame: () => dispatch(restartGame()),
+    generateAuralUpdate: () => dispatch(generateAuralUpdate())
+})
+
+export default connect(mapStateToProps,mapDispatchToProps)(Game);
